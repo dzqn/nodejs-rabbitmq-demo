@@ -14,13 +14,17 @@ async function connect_rabbitmq() {
         // Mesajın Alınması...
         console.log("Mesaj bekleniyor...");
         channel.consume(queueName, message => {
-            const messageInfo = JSON.parse(message.content.toString())
-            //   {description : 12}
-            const userInfo = data.find(u => u.id == messageInfo.description)
+            const messageInfo = JSON.parse(message.content.toString());
+            /*
+            const userInfo = data.find(u => u.id == messageInfo.description);
             if (userInfo) {
-                console.log("İşlenen Kayıt", userInfo);
+                console.log("Okunan Kayıt", userInfo);
                 channel.ack(message);
             }
+            */
+
+            console.log("Okunan Tarih", messageInfo.description);
+            channel.ack(message);
         });
     } catch (error) {
         console.log("Error", error);

@@ -14,11 +14,18 @@ async function connect_rabbitmq() {
         const channel = await connection.createChannel();
         const assertion = await channel.assertQueue(queueName);
 
+        /*
         data.forEach(i => {
             message.description = i.id;
             channel.sendToQueue(queueName, Buffer.from(JSON.stringify(message)));
             console.log("Gonderilen Mesaj", i.id);
-        });
+        });*/
+
+        setInterval(() => {
+            message.description = new Date();
+            channel.sendToQueue(queueName, Buffer.from(JSON.stringify(message)));
+            console.log("Gonderilen Tarih", message.description);
+        }, 1000);
 
     } catch (error) {
         console.log("Error", error);
